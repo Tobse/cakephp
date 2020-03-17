@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 namespace Cake\Test\TestCase\Datasource;
 
-use Cake\Core\Configure;
 use Cake\Datasource\SimplePaginator;
 use Cake\ORM\Entity;
 
@@ -28,10 +27,17 @@ class SimplePaginatorTest extends PaginatorTest
     public function setUp(): void
     {
         parent::setUp();
-
-        Configure::write('App.namespace', 'TestApp');
+        $this->previousNamespace = static::setAppNamespace('TestApp');
 
         $this->Paginator = new SimplePaginator();
+    }
+
+    /**
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        static::setAppNamespace($this->previousNamespace);
     }
 
     /**

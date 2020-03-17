@@ -53,8 +53,16 @@ class CommandRunnerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Configure::write('App.namespace', 'TestApp');
+        $this->previousNamespace = static::setAppNamespace('TestApp');
         $this->config = dirname(dirname(__DIR__));
+    }
+
+    /**
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        static::setAppNamespace($this->previousNamespace);
     }
 
     /**

@@ -19,7 +19,6 @@ namespace Cake\Test\TestCase\Console;
 use Cake\Command\RoutesCommand;
 use Cake\Command\VersionCommand;
 use Cake\Console\CommandCollection;
-use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use InvalidArgumentException;
 use stdClass;
@@ -34,7 +33,15 @@ class CommandCollectionTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Configure::write('App.namespace', 'TestApp');
+        $this->previousNamespace = static::setAppNamespace('TestApp');
+    }
+
+    /**
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        static::setAppNamespace($this->previousNamespace);
     }
 
     /**

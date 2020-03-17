@@ -43,8 +43,18 @@ class TableUuidTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        static::setAppNamespace();
+        $this->previousNamespace = static::setAppNamespace('TestApp');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        static::setAppNamespace($this->previousNamespace);
+    }
+
 
     /**
      * Provider for testing that string and binary uuids work the same

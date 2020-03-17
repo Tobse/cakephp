@@ -479,10 +479,13 @@ class TestCaseTest extends TestCase
             $this->fail('Missing URL should throw an exception');
         } catch (MissingRouteException $e) {
         }
-        Configure::write('App.namespace', 'TestApp');
+
+        $previousNamespace = static::setAppNamespace('TestApp');
         $this->loadRoutes();
 
         $result = Router::url($url);
         $this->assertSame('/app/articles', $result);
+
+        static::setAppNamespace($previousNamespace);
     }
 }

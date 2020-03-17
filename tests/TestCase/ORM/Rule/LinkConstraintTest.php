@@ -59,7 +59,7 @@ class LinkConstraintTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Configure::write('App.namespace', 'TestApp');
+        $this->previousNamespace = static::setAppNamespace('TestApp');
 
         $this->loadFixtures(
             'Articles',
@@ -79,6 +79,7 @@ class LinkConstraintTest extends TestCase
     {
         parent::tearDown();
         $this->getTableLocator()->clear();
+        static::setAppNamespace($this->previousNamespace);
     }
 
     /**

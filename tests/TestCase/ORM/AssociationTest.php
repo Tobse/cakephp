@@ -198,13 +198,15 @@ class AssociationTest extends TestCase
      */
     public function testSetClassNameWithShortSyntaxToTargetClassName()
     {
-        Configure::write('App.namespace', 'TestApp');
+        $previousNamespace = static::setAppNamespace('TestApp');
 
         $this->association->setClassName(AuthorsTable::class);
         $className = get_class($this->association->getTarget());
         $this->assertSame('TestApp\Model\Table\AuthorsTable', $className);
         $this->association->setClassName('Authors');
         $this->assertSame('Authors', $this->association->getClassName());
+
+        static::setAppNamespace($previousNamespace);
     }
 
     /**

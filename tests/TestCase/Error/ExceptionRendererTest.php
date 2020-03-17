@@ -86,8 +86,7 @@ class ExceptionRendererTest extends TestCase
 
     public function testControllerInstanceForPrefixedRequest()
     {
-        $namespace = Configure::read('App.namespace');
-        Configure::write('App.namespace', 'TestApp');
+        $previousNamespace = static::setAppNamespace('TestApp');
 
         $exception = new NotFoundException('Page not found');
         $request = new ServerRequest();
@@ -102,7 +101,7 @@ class ExceptionRendererTest extends TestCase
             $ExceptionRenderer->__debugInfo()['controller']
         );
 
-        Configure::write('App.namespace', $namespace);
+        static::setAppNamespace($previousNamespace);
     }
 
     /**

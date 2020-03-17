@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 namespace Cake\Test\TestCase\Datasource;
 
-use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\PageOutOfBoundsException;
@@ -38,8 +37,7 @@ trait PaginatorTestTrait
     public function setUp(): void
     {
         parent::setUp();
-
-        Configure::write('App.namespace', 'TestApp');
+        $this->previousNamespace = static::setAppNamespace('TestApp');
 
         $this->Paginator = new Paginator();
 
@@ -54,6 +52,7 @@ trait PaginatorTestTrait
     public function tearDown(): void
     {
         parent::tearDown();
+        static::setAppNamespace($this->previousNamespace);
         $this->getTableLocator()->clear();
     }
 
